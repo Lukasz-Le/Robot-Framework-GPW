@@ -95,14 +95,14 @@ Select Twentieth Company
     Click Link    ${TWENTIETH_COMPANY_LINK} 
 
 Download Biggest turnover
-    Capture Element Screenshot      ${BIGGEST_TURNOVER}   D:/programowanie/Robot/GPW/Screenshots/biggest_turnover.png
+    Capture Element Screenshot      ${BIGGEST_TURNOVER}   biggest_turnover.png
 
 Download Logo
-    Capture Element Screenshot      ${LOGO}    D:/programowanie/Robot/GPW/Screenshots/logo.png
+    Capture Element Screenshot      ${LOGO}    logo.png
 
 Download Top Gainers
-    Capture Element Screenshot    ${TOP_GAINERS}    D:/programowanie/Robot/GPW/Screenshots/top_gainers.png
+    Capture Element Screenshot    ${TOP_GAINERS}    top_gainers.png
 
 Download Top Decliners
     Click Element    ${CHANGE_TOP_DECLINERS}
-    Capture Element Screenshot     ${TOP_DECLINERS}    D:/programowanie/Robot/GPW/Screenshots/top_decliners.png
+    Capture Element Screenshot     ${TOP_DECLINERS}    top_decliners.png
