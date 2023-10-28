@@ -38,7 +38,7 @@ Go Back Page
     Go Back
 
 Create Excel File
-    Create Workbook     D:/programowanie/Robot/GPW/notowania.xlsx
+    Create Workbook     notowania.xlsx
     ${ROW1}=    Create Dictionary    lp.=1    nazwa firmy=${FULL_COMPANY_NAME1}    wartość akcji= ${STOCK_PRICE1} zł   zmiana=${CHANGE_STOCK_PRICE1}
     ${ROW2}=    Create Dictionary    lp.=2    nazwa firmy=${FULL_COMPANY_NAME2}    wartość akcji=${STOCK_PRICE2} zł    zmiana=${CHANGE_STOCK_PRICE2}
     ${ROW3}=    Create Dictionary    lp.=3    nazwa firmy=${FULL_COMPANY_NAME3}    wartość akcji=${STOCK_PRICE3} zł    zmiana=${CHANGE_STOCK_PRICE3}
@@ -80,7 +80,7 @@ Close Page
     Close Browser
 
 Show Charts
-    Add Image    D:/programowanie/Robot/GPW/Screenshots/logo.png
+    Add Image    results/logo.png
     Add heading   Notowania Giełdowe
     Add drop-down     
     ...    name=user_type
@@ -92,27 +92,27 @@ Show Charts
      
     
     IF   $result.user_type == "Najwyższe obroty"
-        Add Image    D:/programowanie/Robot/GPW/Screenshots/logo.png
+        Add Image    results/logo.png
         Add Heading    Notowania Giełdowe    Medium
-        Add Image    url_or_path=D:/programowanie/Robot/GPW/Screenshots/biggest_turnover.png
+        Add Image    results/biggest_turnover.png
         Add Submit Buttons   Zamknij,Powrót
         ${result}=    Run Dialog
         IF    $result.submit =="Powrót"
             Show Charts
         END
     ELSE IF    $result.user_type =="Najmocniej rosnące"
-        Add Image    D:/programowanie/Robot/GPW/Screenshots/logo.png
+        Add Image    results/logo.png
         Add Heading    Notowania Giełdowe    Medium
-        Add Image    url_or_path=D:/programowanie/Robot/GPW/Screenshots/top_gainers.png
+        Add Image    results/top_gainers.png
         Add Submit Buttons   Zamknij,Powrót
         ${result}=    Run Dialog
         IF    $result.submit =="Powrót"
             Show Charts
         END
     ELSE
-        Add Image    D:/programowanie/Robot/GPW/Screenshots/logo.png
+        Add Image    results/logo.png
         Add Heading    "Najmocniej spadające spółki GPW"    Medium
-        Add Image    url_or_path=D:/programowanie/Robot/GPW/Screenshots/top_decliners.png
+        Add Image    results/top_decliners.png
         Add Submit Buttons   Zamknij,Powrót
         ${result}=    Run Dialog
         IF    $result.submit =="Powrót"
