@@ -10,7 +10,7 @@ Resource    ../Locators/locators.robot
 *** Keywords ***
 Download Session Date
     Wait Until Page Contains Element    ${SESSION_DATE} 
-    ${DATE}    Get Text    ${SESSION_DATE} 
+    ${DATE}   Get Text    ${SESSION_DATE} 
     ${SUBSTRING_SESSION_DATE} =    Get Substring    ${DATE}    24    34
     Set Global Variable   ${SUBSTRING_SESSION_DATE}
 
@@ -95,14 +95,14 @@ Select Twentieth Company
     Click Link    ${TWENTIETH_COMPANY_LINK} 
 
 Download Biggest turnover
-    Capture Element Screenshot      ${BIGGEST_TURNOVER}   biggest_turnover.png
+    RPA.Browser.Selenium.Capture Element Screenshot      ${BIGGEST_TURNOVER}   biggest_turnover.png
 
 Download Logo
-    Capture Element Screenshot      ${LOGO}    logo.png
+    RPA.Browser.Selenium.Capture Element Screenshot      ${LOGO}    logo.png
 
 Download Top Gainers
-    Capture Element Screenshot    ${TOP_GAINERS}    top_gainers.png
+    RPA.Browser.Selenium.Capture Element Screenshot    ${TOP_GAINERS}    top_gainers.png
 
 Download Top Decliners
-    Click Element    ${CHANGE_TOP_DECLINERS}
-    Capture Element Screenshot     ${TOP_DECLINERS}    top_decliners.png
+    RPA.Browser.Selenium.Click Element    ${CHANGE_TOP_DECLINERS}
+    RPA.Browser.Selenium.Capture Element Screenshot     ${TOP_DECLINERS}    top_decliners.png

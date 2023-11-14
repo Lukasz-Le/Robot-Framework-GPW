@@ -6,6 +6,7 @@ Library    RPA.Excel.Files
 Library    RPA.Excel.Application
 Library    RPA.Assistant
 Library    String
+Library    RPA.Browser.Selenium
 Resource    ./MainPage.robot
 Resource    ./FirstCompanyPage.robot
 Resource    ./SecondCompanyPage.robot
@@ -31,11 +32,11 @@ Resource    ./TwentiethCompanyPage.robot
 
 *** Keywords ***
 Page Cookies
-    Wait Until Element Is Visible    ${ACCEPT_COOKIES}    10s
-    Click Button    ${ACCEPT_COOKIES}
+   RPA.Browser.Selenium.Wait Until Element Is Visible    ${ACCEPT_COOKIES}    10s
+    RPA.Browser.Selenium.Click Button    ${ACCEPT_COOKIES}
 
 Go Back Page   
-    Go Back
+    RPA.Browser.Selenium.Go Back
 
 Create Excel File
     Create Workbook     notowania.xlsx
@@ -77,10 +78,10 @@ Create Excel File
     Save Workbook
 
 Close Page
-    Close Browser
+    RPA.Browser.Selenium.Close Browser
 
 Show Charts
-    Add Image    results/logo.png
+    Add Image    ${OUTPUT_DIR}${/}logo.png
     Add heading   Notowania Giełdowe
     Add drop-down     
     ...    name=user_type
@@ -92,27 +93,27 @@ Show Charts
      
     
     IF   $result.user_type == "Najwyższe obroty"
-        Add Image    results/logo.png
+        Add Image    ${OUTPUT_DIR}${/}logo.png
         Add Heading    Notowania Giełdowe    Medium
-        Add Image    results/biggest_turnover.png
+        Add Image    ${OUTPUT_DIR}${/}biggest_turnover.png
         Add Submit Buttons   Zamknij,Powrót
         ${result}=    Run Dialog
         IF    $result.submit =="Powrót"
             Show Charts
         END
     ELSE IF    $result.user_type =="Najmocniej rosnące"
-        Add Image    results/logo.png
+        Add Image    ${OUTPUT_DIR}${/}logo.png
         Add Heading    Notowania Giełdowe    Medium
-        Add Image    results/top_gainers.png
+        Add Image    ${OUTPUT_DIR}${/}top_gainers.png
         Add Submit Buttons   Zamknij,Powrót
         ${result}=    Run Dialog
         IF    $result.submit =="Powrót"
             Show Charts
         END
     ELSE
-        Add Image    results/logo.png
+        Add Image    ${OUTPUT_DIR}${/}logo.png
         Add Heading    "Najmocniej spadające spółki GPW"    Medium
-        Add Image    results/top_decliners.png
+        Add Image    ${OUTPUT_DIR}${/}top_decliners.png
         Add Submit Buttons   Zamknij,Powrót
         ${result}=    Run Dialog
         IF    $result.submit =="Powrót"
