@@ -13,16 +13,14 @@ Resource    ./PageObjects/KeyWordDefinitionsFiles/CommonFunctionality.robot
 
 *** Keywords ***
 Open Page
-    [Arguments]    ${ADRESS}  #${BROWSER}         
+    [Arguments]    ${ADRESS}       
     RPA.Browser.Selenium.Open Available Browser     ${ADRESS}    maximized=${True}    browser_selection=chrome    
-    #Maximize Browser Window
-    #Set Selenium Timeout    60s
-
+ 
 
 
 *** Test Cases ***
 Various Charts
-    Open Page   https://www.gpw.pl    #chrome
+    Open Page   https://www.gpw.pl
     CommonFunctionality.Page Cookies
     MainPage.Download Biggest turnover
     MainPage.Download Logo
