@@ -1,5 +1,4 @@
 *** Settings ***
-Library    Selenium2Library     
 Library    OperatingSystem
 Library    Collections
 Library    RPA.Excel.Files
@@ -11,18 +10,12 @@ Resource    ./PageObjects/KeyWordDefinitionsFiles/MainPage.robot
 Resource    ./PageObjects/KeyWordDefinitionsFiles/CommonFunctionality.robot
 
 
-*** Keywords ***
-Open Page
-    [Arguments]    ${ADRESS}       
-    RPA.Browser.Selenium.Open Available Browser     ${ADRESS}    maximized=${True}    browser_selection=chrome    
- 
-
-
 *** Test Cases ***
 Various Charts
-    Open Page   https://www.gpw.pl
-    CommonFunctionality.Page Cookies
+    MainPage.Open Main Page   https://www.gpw.pl
+    MainPage.Page Cookies
     MainPage.Download Biggest turnover
+    MainPage.Download WIG20 Companies
     MainPage.Download Logo
     MainPage.Download Top Gainers
     MainPage.Download Top Decliners

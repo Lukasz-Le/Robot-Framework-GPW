@@ -1,71 +1,55 @@
 *** Settings ***
-Library    Selenium2Library    page_load_timeout=25:00    
-Library    OperatingSystem
 Library    Collections
 Library    RPA.Excel.Files
-Library    RPA.Excel.Application
 Library    RPA.Assistant
 Library    String
 Library    RPA.Browser.Selenium
+Library    RPA.PDF
 Resource    ./MainPage.robot
-Resource    ./FirstCompanyPage.robot
-Resource    ./SecondCompanyPage.robot
-Resource    ./ThirdCompanyPage.robot
-Resource    ./FourthCompanyPage.robot
-Resource    ./FifthCompanyPage.robot
-Resource    ./SixthCompanyPage.robot
-Resource    ./SeventhCompanyPage.robot
-Resource    ./EighthCompanyPage.robot
-Resource    ./NinthCompanyPage.robot
-Resource    ./TenthCompanyPage.robot
-Resource    ./EleventhCompanyPage.robot
-Resource    ./TwelfthCompanyPage.robot
-Resource    ./ThirteenthCompanyPage.robot
-Resource    ./FourteenthCompanyPage.robot
-Resource    ./FifteenthCompanyPage.robot
-Resource    ./SixteenthCompanyPage.robot
-Resource    ./SeventeenthCompanyPage.robot
-Resource    ./EighteenthCompanyPage.robot
-Resource    ./NineteenthCompanyPage.robot
-Resource    ./TwentiethCompanyPage.robot
 
 
 *** Keywords ***
-Page Cookies
-   RPA.Browser.Selenium.Wait Until Element Is Visible    ${ACCEPT_COOKIES}    10s
-    RPA.Browser.Selenium.Click Button    ${ACCEPT_COOKIES}
-
 Go Back Page   
     RPA.Browser.Selenium.Go Back
 
-Create Excel File
-    Create Workbook     notowania.xlsx
-    ${ROW1}=    Create Dictionary    lp.=1    nazwa firmy=${FULL_COMPANY_NAME1}    wartość akcji= ${STOCK_PRICE1} zł   zmiana=${CHANGE_STOCK_PRICE1}
-    ${ROW2}=    Create Dictionary    lp.=2    nazwa firmy=${FULL_COMPANY_NAME2}    wartość akcji=${STOCK_PRICE2} zł    zmiana=${CHANGE_STOCK_PRICE2}
-    ${ROW3}=    Create Dictionary    lp.=3    nazwa firmy=${FULL_COMPANY_NAME3}    wartość akcji=${STOCK_PRICE3} zł    zmiana=${CHANGE_STOCK_PRICE3}
-    ${ROW4}=    Create Dictionary    lp.=4    nazwa firmy=${FULL_COMPANY_NAME4}    wartość akcji=${STOCK_PRICE4} zł    zmiana=${CHANGE_STOCK_PRICE4}
-    ${ROW5}=    Create Dictionary    lp.=5    nazwa firmy=${FULL_COMPANY_NAME5}    wartość akcji=${STOCK_PRICE5} zł    zmiana=${CHANGE_STOCK_PRICE5}
-    ${ROW6}=    Create Dictionary    lp.=6    nazwa firmy=${FULL_COMPANY_NAME6}    wartość akcji=${STOCK_PRICE6} zł    zmiana=${CHANGE_STOCK_PRICE6}
-    ${ROW7}=    Create Dictionary    lp.=7    nazwa firmy=${FULL_COMPANY_NAME7}    wartość akcji=${STOCK_PRICE7} zł    zmiana=${CHANGE_STOCK_PRICE7}
-    ${ROW8}=    Create Dictionary    lp.=8    nazwa firmy=${FULL_COMPANY_NAME8}    wartość akcji=${STOCK_PRICE8} zł    zmiana=${CHANGE_STOCK_PRICE8}
-    ${ROW9}=    Create Dictionary    lp.=9    nazwa firmy=${FULL_COMPANY_NAME9}    wartość akcji=${STOCK_PRICE9} zł    zmiana=${CHANGE_STOCK_PRICE9}
-    ${ROW10}=    Create Dictionary    lp.=10    nazwa firmy=${FULL_COMPANY_NAME10}    wartość akcji=${STOCK_PRICE10} zł    zmiana=${CHANGE_STOCK_PRICE10}
-    ${ROW11}=    Create Dictionary    lp.=11    nazwa firmy=${FULL_COMPANY_NAME11}    wartość akcji=${STOCK_PRICE11} zł    zmiana=${CHANGE_STOCK_PRICE11}
-    ${ROW12}=    Create Dictionary    lp.=12    nazwa firmy=${FULL_COMPANY_NAME12}    wartość akcji=${STOCK_PRICE12} zł    zmiana=${CHANGE_STOCK_PRICE12}
-    ${ROW13}=    Create Dictionary    lp.=13    nazwa firmy=${FULL_COMPANY_NAME13}    wartość akcji=${STOCK_PRICE13} zł    zmiana=${CHANGE_STOCK_PRICE13}
-    ${ROW14}=    Create Dictionary    lp.=14    nazwa firmy=${FULL_COMPANY_NAME14}    wartość akcji=${STOCK_PRICE14} zł    zmiana=${CHANGE_STOCK_PRICE14}
-    ${ROW15}=    Create Dictionary    lp.=15    nazwa firmy=${FULL_COMPANY_NAME15}    wartość akcji=${STOCK_PRICE15} zł    zmiana=${CHANGE_STOCK_PRICE15}
-    ${ROW16}=    Create Dictionary    lp.=16    nazwa firmy=${FULL_COMPANY_NAME16}    wartość akcji=${STOCK_PRICE16} zł    zmiana=${CHANGE_STOCK_PRICE16}
-    ${ROW17}=    Create Dictionary    lp.=17    nazwa firmy=${FULL_COMPANY_NAME17}    wartość akcji=${STOCK_PRICE17} zł    zmiana=${CHANGE_STOCK_PRICE17}
-    ${ROW18}=    Create Dictionary    lp.=18    nazwa firmy=${FULL_COMPANY_NAME18}    wartość akcji=${STOCK_PRICE18} zł    zmiana=${CHANGE_STOCK_PRICE18}
-    ${ROW19}=    Create Dictionary    lp.=19    nazwa firmy=${FULL_COMPANY_NAME19}    wartość akcji=${STOCK_PRICE19} zł    zmiana=${CHANGE_STOCK_PRICE19}
-    ${ROW20}=    Create Dictionary    lp.=20    nazwa firmy=${FULL_COMPANY_NAME20}    wartość akcji=${STOCK_PRICE20} zł    zmiana=${CHANGE_STOCK_PRICE20}
-    @{Worksheet_Data}=    Create List    ${ROW1}    ${ROW2}     ${ROW3}    ${ROW4}
-    ...    ${ROW5}    ${ROW6}     ${ROW7}    ${ROW8}    ${ROW9}
-    ...    ${ROW10}    ${ROW11}     ${ROW12}    ${ROW13}    ${ROW14}
-    ...    ${ROW15}    ${ROW16}     ${ROW17}    ${ROW18}    ${ROW19}    ${ROW20}  
+Download Session Date
+    RPA.Browser.Selenium.Wait Until Page Contains Element    ${SESSION_DATE} 
+    ${DATE}  RPA.Browser.Selenium.Get Text    ${SESSION_DATE} 
+    ${SUBSTRING_SESSION_DATE} =    Get Substring    ${DATE}    24    34
+    Set Global Variable   ${SUBSTRING_SESSION_DATE}   
+
+Open Subpage
+    [Arguments]    ${url}
+    RPA.Browser.Selenium.Wait Until Element Is Visible    ${url}
+    RPA.Browser.Selenium.Click Link    ${url}
+    
+Create Rows
+     FOR    ${ROW_NUMBER}    ${url}    IN ENUMERATE   @{urls}
+        Open Subpage    ${url} 
+        RPA.Browser.Selenium.Wait Until Page Contains Element    ${PRICE} 
+        ${STOCK_PRICE}    RPA.Browser.Selenium.Get Text    ${PRICE}
+        RPA.Browser.Selenium.Wait Until Page Contains Element    ${CHANGE}
+        ${CHANGE_STOCK_PRICE}    RPA.Browser.Selenium.Get Text    ${CHANGE}
+        RPA.Browser.Selenium.Wait Until Page Contains Element    ${NAME}
+        ${FULL_COMPANY_NAME}    RPA.Browser.Selenium.Get Text    ${NAME}
+        ${ROW_Data}=    Create Dictionary    lp.= ${ROW_NUMBER+1}  nazwa firmy=${FULL_COMPANY_NAME}   wartość akcji=${STOCK_PRICE} zł   zmiana=${CHANGE_STOCK_PRICE} 
+        Add Row to File    ${ROW_Data}    ${ROW_NUMBER+1}
+        Go Back Page  
+    END
+            
+Add Row to File
+    [Arguments]    ${ROW_Data}    ${ROW_NUMBER}
+    RPA.Excel.Files.Open Workbook    test.xlsx
+    Append Rows To Worksheet     content=${ROW_Data}        header=${True}
+    Save Workbook    test.xlsx
+    
+Create Excel
+    Create Workbook     test.xlsx
     Rename worksheet    Sheet     ${SUBSTRING_SESSION_DATE}
-    Append Rows To Worksheet    content=@{Worksheet_Data}    name=${SUBSTRING_SESSION_DATE}   header=True
+    Save Workbook
+
+Organize Excel
+    RPA.Excel.Files.Open Workbook    test.xlsx
     Insert Columns Before    column=A
     Insert Rows Before    row=1
     Set Styles    B2:B22   align_horizontal=left
@@ -77,6 +61,15 @@ Create Excel File
     Auto Size Columns    D    E
     Save Workbook
 
+Create PDF
+    RPA.Browser.Selenium.Wait Until Element Is Visible    ${TWENTIETH_COMPANY_LINK}
+    Run Keyword and Ignore Error    RPA.Browser.Selenium.Scroll Element Into View    ${ANNOUNCEMENTS}
+    RPA.Browser.Selenium.Set Browser Implicit Wait   5s
+    RPA.Browser.Selenium.Capture Element Screenshot    ${WIG20_COMPANIES}     ${OUTPUT_DIR}${/}1.png
+    ${FILES}    Create List    ${OUTPUT_DIR}${/}1.png
+    RPA.PDF.Add Files To Pdf    ${FILES}    target_document=wig20.pdf
+
+
 Close Page
     RPA.Browser.Selenium.Close Browser
 
@@ -85,7 +78,7 @@ Show Charts
     Add heading   Notowania Giełdowe
     Add drop-down     
     ...    name=user_type
-    ...    options=Najwyższe obroty,Najmocniej rosnące,Najmocniej spadające
+    ...    options=Najwyższe obroty,Najmocniej rosnące,Najmocniej spadające, Notowania WIG20
     ...    default=Najwyższe obroty
     ...    label=Wybierz z listy rozwijanej
     Add submit buttons    buttons=Dalej
@@ -110,13 +103,22 @@ Show Charts
         IF    $result.submit =="Powrót"
             Show Charts
         END
-    ELSE
+    ELSE IF     $result.user_type =="Najmocniej spadające"
         Add Image    ${OUTPUT_DIR}${/}logo.png
         Add Heading    "Najmocniej spadające spółki GPW"    Medium
         Add Image    ${OUTPUT_DIR}${/}top_decliners.png
         Add Submit Buttons   Zamknij,Powrót
         ${result}=    Run Dialog
         IF    $result.submit =="Powrót"
+            Show Charts
+        END
+    ELSE     
+        Add Image    ${OUTPUT_DIR}${/}logo.png
+        Add Heading    "Notowania WIG20"    Medium
+        Add Image    ${OUTPUT_DIR}${/}WIG20.png
+        Add Submit Buttons   Zamknij,Powrót
+        ${result}=    Run Dialog    height=768   width=1366
+            IF    $result.submit =="Powrót"
             Show Charts
         END
     END
