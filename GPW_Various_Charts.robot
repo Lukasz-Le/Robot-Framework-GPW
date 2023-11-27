@@ -1,5 +1,4 @@
 *** Settings ***
-Library    RPA.Excel.Files
 Library    String
 Library    RPA.Assistant
 Library    RPA.Browser.Selenium
