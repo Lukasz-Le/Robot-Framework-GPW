@@ -1,8 +1,5 @@
 *** Settings ***
-Library    OperatingSystem
-Library    Collections
 Library    RPA.Excel.Files
-Library    RPA.Excel.Application
 Library    String
 Library    RPA.Assistant
 Library    RPA.Browser.Selenium
