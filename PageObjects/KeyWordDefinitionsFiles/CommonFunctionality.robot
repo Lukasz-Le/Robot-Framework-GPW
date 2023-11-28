@@ -81,45 +81,44 @@ Show Charts
     ...    options=Najwyższe obroty,Najmocniej rosnące,Najmocniej spadające, Notowania WIG20
     ...    default=Najwyższe obroty
     ...    label=Wybierz z listy rozwijanej
-    Add submit buttons    buttons=Dalej
-    ${result}=      Run dialog
-     
-    
-    IF   $result.user_type == "Najwyższe obroty"
+    Add submit buttons    buttons=Zamknij,Dalej
+    ${result}=      Run dialog    title=GPW
+    IF    $result.submit =="Dalej" and $result.user_type =="Najwyższe obroty"
         Add Image    ${OUTPUT_DIR}${/}logo.png
         Add Heading    Notowania Giełdowe    Medium
         Add Image    ${OUTPUT_DIR}${/}biggest_turnover.png
         Add Submit Buttons   Zamknij,Powrót
-        ${result}=    Run Dialog
-        IF    $result.submit =="Powrót"
+        ${result}=    Run Dialog    title=GPW
+            IF    $result.submit =="Powrót"
             Show Charts
-        END
-    ELSE IF    $result.user_type =="Najmocniej rosnące"
+            END
+    ELSE IF    $result.submit =="Dalej" and $result.user_type =="Najmocniej rosnące"
         Add Image    ${OUTPUT_DIR}${/}logo.png
         Add Heading    Notowania Giełdowe    Medium
         Add Image    ${OUTPUT_DIR}${/}top_gainers.png
         Add Submit Buttons   Zamknij,Powrót
-        ${result}=    Run Dialog
-        IF    $result.submit =="Powrót"
+        ${result}=    Run Dialog    title=GPW
+            IF    $result.submit =="Powrót"
             Show Charts
-        END
-    ELSE IF     $result.user_type =="Najmocniej spadające"
+            END
+    ELSE IF     $result.submit =="Dalej" and $result.user_type =="Najmocniej spadające"
         Add Image    ${OUTPUT_DIR}${/}logo.png
         Add Heading    "Najmocniej spadające spółki GPW"    Medium
         Add Image    ${OUTPUT_DIR}${/}top_decliners.png
         Add Submit Buttons   Zamknij,Powrót
-        ${result}=    Run Dialog
-        IF    $result.submit =="Powrót"
-            Show Charts
-        END
-    ELSE     
-        Add Image    ${OUTPUT_DIR}${/}logo.png
-        Add Heading    "Notowania WIG20"    Medium
-        Add Image    ${OUTPUT_DIR}${/}WIG20.png
-        Add Submit Buttons   Zamknij,Powrót
-        ${result}=    Run Dialog    height=768   width=1366
+                ${result}=    Run Dialog    title=GPW
             IF    $result.submit =="Powrót"
             Show Charts
-        END
+            END
+    ELSE IF    $result.submit =="Dalej" and $result.user_type =="Notowania WIG20"        
+            Add Image    ${OUTPUT_DIR}${/}logo.png
+            Add Heading    "Notowania WIG20"    Medium
+            Add Image    ${OUTPUT_DIR}${/}WIG20.png
+            Add Submit Buttons   Zamknij,Powrót
+            ${result}=    Run Dialog    height=768   width=1366
+                IF    $result.submit =="Powrót"
+                Show Charts
+                END
     END
+    
     

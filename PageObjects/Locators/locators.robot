@@ -36,3 +36,4 @@ ${PRICE}    css=.bg_grey .container .row .PaL .summary
 ${CHANGE}    css=.bg_grey .container .row .PaL b
 ${NAME}    css=#company-card-tabs .footable tbody tr:nth-child(6) td
 ${ANNOUNCEMENTS}    css=h4.header a[href="komunikaty"]
+${SUBSTRING_SESSION_DATE}
